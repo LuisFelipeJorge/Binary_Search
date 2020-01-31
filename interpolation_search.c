@@ -14,28 +14,50 @@ long int interpoSearch(long int x, long int n, long int a[]);// Function that co
 
 int main(int argc, char const *argv[]) {
 
-  long int n = 1000;
-  long int *a = (long int *)malloc(n*(sizeof(long int)));
-  if (a == NULL) {
-    printf("Memory could not be allocated" );
-    exit(EXIT_FAILURE); // in this case, we have a problem in the process of allocating memory for the array
-  }else{
-    random_array(n,a);
-    print_array(n,a);
-    qsort(a,n,sizeof(long int),cmpfunc);
-    print_array(n,a);
-    long int  b;
-    b = interpoSearch(940,n,a);
-    if (b == -1) {
-      printf("The element doesen't belong to the array\n");
-    }else{
-      printf("Element found at the position %ld \n", b );
-      printf("array[%ld] = %ld\n",b, a[b] );
+  int k,i; // K is the exponent of 10
+  long int n; // will be the size of the arrray
+  clock_t t_start1,t_start2, t_end1,t_end2; // variables to measure the running time of each algorithm
+  double timeUsed1,timeUsed2; // time passed
+  for (k = 2; k <= 8; k++) {
+
+    int i = k;
+    n = 1;
+    while (i > 0) {
+      n = n*10; // the value of n will be 10 raised to k
+      i--;
     }
 
-    free(a);
-  }
+    long int *a = (long int *)malloc(n*(sizeof(long int)));
+    if (a == NULL) {
+      printf("Memory could not be allocated" );
+      exit(EXIT_FAILURE); // in this case, we have a problem in the process of allocating memory for the array
+    }else{
+      random_array(n,a);
+      //print_array(n,a);
+      t_start1 = clock();
+      qsort(a,n,sizeof(long int),cmpfunc);
+      t_end1 = clock();
+      //print_array(n,a);
+      long int  b;
+      t_start2 = clock();
+      b = interpoSearch(940,n,a);
+      t_end2 = clock();
+      printf("K = %d\n", k );
+      if (b == -1) {
+        printf("The element doesen't belong to the array\n");
+      }else{
+        printf("Element found at the position %ld \n", b );
+        printf("array[%ld] = %ld\n",b, a[b] );
+      }
+      timeUsed1 = ((double)(t_end1 - t_start1)/CLOCKS_PER_SEC);
+      timeUsed2 = ((double)(t_end2 - t_start2)/CLOCKS_PER_SEC);
 
+      printf("----------------------------INTERPOLATION SEARCH-------------------------\n");
+      printf("Time passed for sorting = %f \n", timeUsed1 );
+      printf("Time used for searching = %f \n",timeUsed2 );
+      free(a);
+    }
+  }
   getchar();
   return 0;
 }
