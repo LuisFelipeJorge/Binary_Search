@@ -6,7 +6,9 @@ After obtaining one of these information, we need to repeat the steps above, rec
 
 Analysing the algorithms output, we can see an excelent performance, taking millionth of seconds to accomplish the search. But despite that, we can still improve the algorithm under certain conditions. If the numbers within our set are uniformly distributed, we could implement another logic to choose the element from the list that we will use to compare with the value we want, x.
 looking for the position with keeping uniform distribution in mind.
+
 **(position - lower)         (x - arr[lower])**
 **------------------  =   -------------------------**
 **(upper - lower)        (arr[upper] - arr[lower])**
+
  This formula comes from an inversely proportional relation between the distances between the indices of the elements and the distance between the values ​​contained in the array.The relationship between the distances of the element and the lower limit with the distance between the upper limit and the lower limit is proportional to the relationship between the difference of the input value and the first value of the array with the difference between the first value and the last value of the array.Thus, the time complexity of the improved algorithm is, on average, **O(loglogn)**. After running both versions, the interpolation search was able to work with larger inputs than the binary search and also performed excellently.
